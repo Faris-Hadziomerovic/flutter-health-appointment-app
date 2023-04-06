@@ -24,6 +24,8 @@ class AppointmentCard extends StatelessWidget {
 
   const AppointmentCard({super.key, required this.appointment});
 
+  bool get isActive => appointment.status == AppointmentStatus.active;
+
   String getStatusLabel(AppointmentStatus? appointmentStatus) {
     switch (appointmentStatus) {
       case AppointmentStatus.active:
@@ -59,35 +61,49 @@ class AppointmentCard extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        onTap: () => navigateToAppointmentDetails(context),
-        enabled: true,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 20,
-        ),
-        title: AppointmentScheduleInfo(
-          dateTime: appointment.dateTime,
-          duration: appointment.duration,
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: Row(
-            children: [
-              Text(
-                'doc. ${doctor.firstName} ${doctor.lastName}',
-                style: Theme.of(context).textTheme.bodyLarge,
+      child: Stack(
+        children: [
+          ListTile(
+            onTap: () => navigateToAppointmentDetails(context),
+            enabled: isActive,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 20,
+            ),
+            title: AppointmentScheduleInfo(
+              dateTime: appointment.dateTime,
+              duration: appointment.duration,
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Row(
+                children: [
+                  Text(
+                    'doc. ${doctor.firstName} ${doctor.lastName}',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const Spacer(),
+                  Text(
+                    getStatusLabel(appointment.status),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: getStatusColor(appointment.status),
+                        ),
+                  ),
+                ],
               ),
-              const Spacer(),
-              Text(
-                getStatusLabel(appointment.status),
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: getStatusColor(appointment.status),
-                    ),
-              ),
-            ],
+            ),
           ),
-        ),
+          if (!isActive)
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Theme.of(context).disabledColor,
+              ),
+            ),
+        ],
       ),
     );
   }
