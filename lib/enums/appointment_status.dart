@@ -1,0 +1,4 @@
+enum AppointmentStatus {
+  active,
+  complete,
+}
