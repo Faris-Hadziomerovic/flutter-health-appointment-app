@@ -31,6 +31,7 @@ class AppTheme {
             fontWeight: FontWeight.w200,
           ),
         ),
+        disabledColor: AppColors.disabledOverlayColor,
         scaffoldBackgroundColor: AppColors.colorScheme.background,
         appBarTheme: AppBarTheme(
           color: AppColors.colorScheme.background,
