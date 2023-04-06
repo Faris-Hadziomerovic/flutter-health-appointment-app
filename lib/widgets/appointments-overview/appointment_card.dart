@@ -79,7 +79,7 @@ class AppointmentCard extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'doc. ${doctor.firstName} ${doctor.lastName}',
+                    'doc. ${doctor?.firstName} ${doctor?.lastName}',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const Spacer(),

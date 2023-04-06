@@ -11,8 +11,9 @@ import '../shared/user_icon.dart';
 
 class PatientCard extends StatelessWidget {
   final Patient patient;
+  final bool showUserImageInstead;
 
-  const PatientCard({super.key, required this.patient});
+  const PatientCard({super.key, required this.patient, this.showUserImageInstead = false});
 
   Future<void> showQrCodeDialog(BuildContext context, {double size = 250}) async {
     return await showDialog(
@@ -39,7 +40,9 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = context.read<Auth>().userData.profileImageUrl;
+    final imageUrl = showUserImageInstead
+        ? context.read<Auth>().userData?.profileImageUrl
+        : patient.profileImageUrl;
 
     return Card(
       clipBehavior: Clip.hardEdge,
@@ -52,7 +55,6 @@ class PatientCard extends StatelessWidget {
         leading: UserIcon(
           radius: 30,
           imageUrl: imageUrl,
-          // imageUrl: patient.profileImageUrl,
         ),
         title: Text(
           '${patient.firstName} ${patient.lastName}',

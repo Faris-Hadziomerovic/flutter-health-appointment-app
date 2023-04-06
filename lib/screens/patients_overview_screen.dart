@@ -19,16 +19,30 @@ class PatientsOverviewScreen extends StatefulWidget {
 }
 
 class _PatientsOverviewScreenState extends State<PatientsOverviewScreen> {
-  late final Doctor userData;
+  bool isInitialized = false;
+
+  Doctor? userData;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    userData = context.read<Auth>().userData;
+    if (!isInitialized) {
+      userData = context.read<Auth>().userData;
+      if (userData != null) {
+        fetchData();
+        setState(() {
+          isInitialized = true;
+        });
+      }
+    }
+  }
 
-    context.read<Patients>().fetchPatientsByDoctorId(userData.id);
-    context.read<Appointments>().fetchAppointmentsByDoctorId(userData.id);
+  void fetchData() {
+    if (userData != null) {
+      context.read<Patients>().fetchPatientsByDoctorId(userData!.id);
+      context.read<Appointments>().fetchAppointmentsByDoctorId(userData!.id);
+    }
   }
 
   @override
@@ -43,7 +57,7 @@ class _PatientsOverviewScreenState extends State<PatientsOverviewScreen> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              '${userData.firstName} ${userData.lastName}',
+              '${userData?.firstName} ${userData?.lastName}',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
@@ -53,8 +67,7 @@ class _PatientsOverviewScreenState extends State<PatientsOverviewScreen> {
             padding: const EdgeInsets.all(15),
             child: UserIcon(
               radius: 25,
-              imageUrl: userData.profileImageUrl,
-              // imageUrl: 'https://i.ibb.co/frkgwqX/USVisa-Photo.jpg',
+              imageUrl: userData?.profileImageUrl,
             ),
           ),
         ],
@@ -76,13 +89,23 @@ class _PatientsOverviewScreenState extends State<PatientsOverviewScreen> {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-              Consumer<Patients>(
-                builder: (_, patientsData, __) => Column(
-                  children: [
-                    ...patientsData.localPatients.map((patient) => PatientCard(patient: patient)),
-                  ],
-                ),
-              ),
+              isInitialized
+                  ? Consumer<Patients>(
+                      builder: (_, patientsData, __) => Column(
+                        children: [
+                          ...patientsData.localPatients.map((patient) => PatientCard(
+                                patient: patient,
+                                showUserImageInstead: true,
+                              )),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height / 2,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
+                    ),
             ],
           ),
         ),

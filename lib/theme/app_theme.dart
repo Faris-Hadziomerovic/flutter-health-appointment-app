@@ -9,6 +9,8 @@ class AppTheme {
   /// the light mode app theme.
   static ThemeData get appThemeData => ThemeData(
         colorScheme: AppColors.colorScheme,
+        disabledColor: AppColors.disabledOverlayColor,
+        scaffoldBackgroundColor: AppColors.colorScheme.background,
         textTheme: TextTheme(
           titleLarge: TextStyle(
             color: AppColors.colorScheme.primary,
@@ -31,8 +33,6 @@ class AppTheme {
             fontWeight: FontWeight.w200,
           ),
         ),
-        disabledColor: AppColors.disabledOverlayColor,
-        scaffoldBackgroundColor: AppColors.colorScheme.background,
         appBarTheme: AppBarTheme(
           color: AppColors.colorScheme.background,
           foregroundColor: AppColors.colorScheme.onBackground,

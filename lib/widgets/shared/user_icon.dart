@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserIcon extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double radius;
 
   const UserIcon({
@@ -10,12 +10,14 @@ class UserIcon extends StatelessWidget {
     this.imageUrl = '',
   });
 
+  bool get imageUrlIsEmpty => imageUrl?.isEmpty ?? true;
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: radius,
       backgroundColor: Colors.black12,
-      foregroundImage: NetworkImage(imageUrl),
+      foregroundImage: imageUrlIsEmpty ? null : NetworkImage(imageUrl as String),
       child: FittedBox(
         child: Icon(
           Icons.person,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'providers/appointments_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/doctors_provider.dart';
 import 'providers/patients_provider.dart';
 import 'screens/appointment_details_screen.dart';
 import 'screens/appointments_overview_screen.dart';
@@ -16,7 +17,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Auth>(create: (_) => Auth()),
+        ChangeNotifierProvider<Auth>(create: (_) => Auth()..login()),
+        ChangeNotifierProvider<Doctors>(create: (_) => Doctors()),
         ChangeNotifierProvider<Patients>(create: (_) => Patients()),
         ChangeNotifierProvider<Appointments>(create: (_) => Appointments()),
       ],

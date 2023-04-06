@@ -46,33 +46,47 @@ class AppointmentDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appointment = ModalRoute.of(context)?.settings.arguments as Appointment;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_rounded),
-        ),
-        title: AppointmentScheduleInfo(
-          dateTime: appointment.dateTime,
-          duration: appointment.duration,
-        ),
-        actions: [
-          Container(
-            padding: const EdgeInsets.only(
-              right: 15.0,
-              bottom: 5,
-            ),
-            child: IconButton(
-              onPressed: () => deleteAppointment(context),
-              icon: Icon(
-                CupertinoIcons.delete,
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-          )
-        ],
+    final appBar = AppBar(
+      leading: IconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(Icons.arrow_back_rounded),
       ),
-      body: const AppointmentDetailsForm(),
+      title: AppointmentScheduleInfo(
+        dateTime: appointment.dateTime,
+        duration: appointment.duration,
+      ),
+      actions: [
+        Container(
+          padding: const EdgeInsets.only(
+            right: 15.0,
+            bottom: 5,
+          ),
+          child: IconButton(
+            onPressed: () => deleteAppointment(context),
+            icon: Icon(
+              CupertinoIcons.delete,
+              color: Theme.of(context).colorScheme.error,
+            ),
+          ),
+        )
+      ],
+    );
+
+    final mediaQuery = MediaQuery.of(context);
+    final appBarHeight = appBar.preferredSize.height;
+    final verticalOffset = mediaQuery.viewPadding.vertical + mediaQuery.viewInsets.vertical;
+    final fullScreenHeight = mediaQuery.size.height;
+    final usableScreenHeight = fullScreenHeight - appBarHeight - verticalOffset;
+    final usableScreenWidth = mediaQuery.size.width;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: appBar,
+      body: SizedBox(
+        height: usableScreenHeight,
+        width: usableScreenWidth,
+        child: AppointmentDetailsForm(appointment: appointment),
+      ),
     );
   }
 }

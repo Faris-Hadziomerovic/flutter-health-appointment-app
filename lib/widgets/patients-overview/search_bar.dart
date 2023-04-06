@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:health_appointment_app/helpers/input_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/placeholders.dart';
+import '../../helpers/input_helper.dart';
 import '../../providers/patients_provider.dart';
 import '../../theme/app_colors.dart';
 
@@ -14,8 +15,6 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  static const _placeholderText = 'Search your patients';
-
   void onSubmit(String query) {
     context.read<Patients>().filterPatients(query);
   }
@@ -36,7 +35,7 @@ class _SearchBarState extends State<SearchBar> {
       decoration: InputHelper.createInputDecoration(
         context,
         prefixIcon: searchIcon,
-        placeholderText: _placeholderText,
+        placeholderText: Placeholders.searchBar,
       ),
     );
   }
