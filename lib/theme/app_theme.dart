@@ -60,6 +60,10 @@ class AppTheme {
         ),
         dialogTheme: const DialogTheme(
           shape: AppShapes.roundedShapeRadius15,
+          actionsPadding: EdgeInsets.only(
+            bottom: 15,
+            right: 15,
+          ),
         ),
         snackBarTheme: const SnackBarThemeData(
           elevation: 0,
@@ -70,11 +74,11 @@ class AppTheme {
           elevation: 3,
           shape: AppShapes.roundedShapeRadius10,
         ),
-        elevatedButtonTheme: const ElevatedButtonThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            // backgroundColor: MaterialStatePropertyAll(AppColors.buttonColor),
-            // foregroundColor: MaterialStatePropertyAll(AppColors.onButtonColor),
-            shape: MaterialStatePropertyAll(AppShapes.roundedShapeRadius15),
+            backgroundColor: MaterialStatePropertyAll(AppColors.colorScheme.primary),
+            foregroundColor: MaterialStatePropertyAll(AppColors.colorScheme.onPrimary),
+            shape: const MaterialStatePropertyAll(AppShapes.roundedShapeRadius15),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -90,7 +94,12 @@ class AppTheme {
         ),
         textButtonTheme: const TextButtonThemeData(
           style: ButtonStyle(
-            visualDensity: VisualDensity.compact,
+            textStyle: MaterialStatePropertyAll(
+              TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       );
