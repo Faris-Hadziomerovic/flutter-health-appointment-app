@@ -29,10 +29,6 @@ class AppColors {
   /// The icon color
   static const iconColor = Color(0xFF484CBC);
 
-  /// The translucent overlay for disabled widgets.
-  /// To be used alongside a Stack widget to display over the disabled one.
-  static const disabledOverlayColor = Colors.white54;
-
   /// The color of translucent overlays.
   /// To be used with snackBar and toast widgets as their background.
   static const overlayColor = Color(0x88484CBC);

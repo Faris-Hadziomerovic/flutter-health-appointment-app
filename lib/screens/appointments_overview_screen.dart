@@ -14,11 +14,10 @@ class AppointmentsOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final patient = ModalRoute.of(context)?.settings.arguments as Patient;
-
     final appointments = context.read<Appointments>().getAppointmentsByDoctorAndPatientId(
           doctorId: patient.doctorId,
           patientId: patient.id,
-        )..sort(((a, b) => b.dateTime.compareTo(a.dateTime)));
+        );
 
     return Scaffold(
       appBar: AppBar(
